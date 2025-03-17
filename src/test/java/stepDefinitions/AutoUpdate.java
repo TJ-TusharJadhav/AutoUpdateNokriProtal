@@ -15,15 +15,11 @@ import io.cucumber.java.en.*;
 
 public class AutoUpdate {
 	private WebDriver driver;
-    private WebDriverWait wait;
+    private WebDriverWait wait; 
     
-    private final String EMAIL = "tusharsjadhav60@gmail.com";
-    private final String PASSWORD = "JayJay_Shakar1919";
-    private final String RESUME_PATH = "E:\\Tushar_Jadhav_QA.pdf"; 
-	
-	@Given("the user is logged into the Nokri portal")
-	public void the_user_is_logged_into_the_nokri_portal() {
-		driver = new ChromeDriver();
+    @Given("the user is logged into the Nokri portal {string} {string}")
+    public void the_user_is_logged_into_the_nokri_portal(String EMAIL, String PASSWORD) {
+    	driver = new ChromeDriver();
         driver.manage().window().maximize();
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         driver.get("https://www.naukri.com/nlogin/login?URL=https://www.naukri.com/mnjuser/homepage");
@@ -31,7 +27,16 @@ public class AutoUpdate {
         driver.findElement(By.id("passwordField")).sendKeys(PASSWORD);
         driver.findElement(By.xpath("//button[contains(text(),'Login')]")).click();
         wait.until(ExpectedConditions.urlContains("homepage")); 
-	}
+        
+    }
+
+    @When("selects a valid resume file {string}")
+    public void selects_a_valid_resume_file(String RESUME_PATH) throws InterruptedException {
+    	WebElement uploadButton = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@type='file']")));
+        uploadButton.sendKeys(RESUME_PATH); 
+        Thread.sleep(2500);
+        
+    }
 
 	@Given("the user is on the My Profile page")
 	public void the_user_is_on_the_my_profile_page() {
@@ -40,16 +45,11 @@ public class AutoUpdate {
 	}
 
 	@When("the user clicks on the Upload Resume button")
-	public void the_user_clicks_on_the_upload_resume_button() {
+	public void the_user_clicks_on_the_upload_resume_button() throws InterruptedException {
 		WebElement parentDiv = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"lazyAttachCV\"]/div/div[2]/div[2]/div/div[2]/div[1]/div/section")));
-        parentDiv.click(); 
+        parentDiv.click();
+        Thread.sleep(2500);
         
-	}
-
-	@When("selects a valid resume file")
-	public void selects_a_valid_resume_file() {
-		WebElement uploadButton = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@type='file']")));
-        uploadButton.sendKeys(RESUME_PATH); 
 	}
 
 	@Then("the system should successfully update the resume")
@@ -72,6 +72,7 @@ public class AutoUpdate {
         Thread.sleep(500);
         WebElement saveButton = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("saveBasicDetailsBtn")));
         saveButton.click();
+        driver.quit();
      }
 
 	@Then("the system should successfully update the profile")
