@@ -11,9 +11,7 @@ Feature: Update Resume and Update Profile on Nokri Portal
 
     Examples: 
       | username                   | password          | resume_path                   |
-      | tusharsjadhav60@gmail.com  | JayJay_Shakar1919 | E:\\Tushar_Jadhav_QA.pdf      |
-      | nancykalariya101@gmail.com | @4559baleno       | E:\\nancy_kalariya_UI_UX.pdf  |
-      | ayushpatel112428@gmail.com | Ayushpatel@112428@ | E:\Ayush H Patel .pdf |
+      | tusharsjadhav60@gmail.com  | JayJay_Shakar1919 | C:\learing\Resume.pdf      |
 
   @Profile
   Scenario Outline: Successfully updating personal information
@@ -26,5 +24,3 @@ Feature: Update Resume and Update Profile on Nokri Portal
     Examples: 
       | username                   | password          |
       | tusharsjadhav60@gmail.com  | JayJay_Shakar1919 |
-      | nancykalariya101@gmail.com | @4559baleno       |
-      | ayushpatel112428@gmail.com | Ayushpatel@112428@ |
